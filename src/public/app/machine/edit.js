@@ -172,8 +172,7 @@ function machineEditCtrl($scope, $routeParams, machineSrv, dialogs, logger) {
      * @param {Function} callback
      */
     function showEdgeModal(edge, callback) {
-        var inputs = $scope.inputs;
-        var data = { edge: edge, inputs: inputs };
+        var data = { edge: edge };
 
         var dlg = dialogs.create('/app/dialogs/edgeDlg.html', 'edgeDlgCtrl', data, { size: 'md' });
 
