@@ -22,7 +22,12 @@ const configurePagination = require('./middlewares/configurePagination');
 app.use('/api', configurePagination);
 
 // declare all routes with /API
+// get index page.
+app.get(require('./routes/index'));
 app.use('/api', require('./routes/machine'));
+
+// static files.
+app.use(express.static(path.join(__dirname, 'public')));
 
 // set host and port.
 app.set('host', config.HOST || "localhost");
