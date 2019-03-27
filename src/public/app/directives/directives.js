@@ -7,7 +7,7 @@
      * Directiva de manipulacion de grafos 2D.
      * Uso: <vis-network data="data" options="options" events="events"></vis-network>
      */
-    app.directive('visNetwork', [function () {
+    app.directive('angularVis', [function () {
 
         return {
             restrict: 'E',

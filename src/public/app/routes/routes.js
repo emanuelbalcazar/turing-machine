@@ -38,6 +38,14 @@
                     templateUrl: 'app/machine/list.html',
                     controller: 'machineListCtrl'
                 }
+            },
+            {
+                url: '/machines/:id',
+                config: {
+                    title: 'Editar Maquinas',
+                    templateUrl: 'app/machine/edit.html',
+                    controller: 'machineEditCtrl'
+                }
             }
         ];
     }

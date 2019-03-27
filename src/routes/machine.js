@@ -12,7 +12,6 @@ router.post('/machines', (req, res) => {
 
 // get all the search queries by filters and options.
 router.get('/machines', (req, res) => {
-    console.log('le')
     controller.searchByPage(req.filters, req.options, (error, result) => {
         return defaultCallback(res, error, result);
     });
