@@ -30,8 +30,7 @@ module.exports = function (grunt) {
             },
             copy_fonts: {
                 command: '\\cp -R -u -p bower_components/bootstrap/fonts/* src/public/fonts/ && ' +
-                    '\\cp -R -u -p bower_components/font-awesome/web-fonts-with-css/webfonts/* src/public/webfonts/ && ' +
-                    '\\cp -R -u -p bower_components/ngreactions/css/font-reaction/fonts/* src/public/fonts/'
+                    '\\cp -R -u -p bower_components/font-awesome/web-fonts-with-css/webfonts/* src/public/webfonts/'
             },
             copy_fast: {
                 command: '\\cp -R -u -p src/public/assets/app.js src/public/assets/app.min.js && ' +
