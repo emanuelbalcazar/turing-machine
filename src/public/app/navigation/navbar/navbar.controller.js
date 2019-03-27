@@ -1,7 +1,7 @@
-angular.module('app').controller('navbarCtrl', ['$scope', navbarCtrl]);
+angular.module('app').controller('navbarCtrl', ['$scope', '$location', navbarCtrl]);
 
 // navbar controller
-function navbarCtrl($scope) {
+function navbarCtrl($scope, $location) {
     $scope.redirectTo = function (route) {
         $location.path(route);
     };

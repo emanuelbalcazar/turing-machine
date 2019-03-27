@@ -1,31 +1,45 @@
-var app = angular.module('app');
+// Modulo de rutas.
+(function () {
+    'use strict';
 
-app.constant('routes', getRoutes());
+    var app = angular.module('app');
 
-// config route module.
-app.config(['$routeProvider', 'routes', routeConfigurator]);
+    // Obtiene las rutas definidas.
+    app.constant('routes', getRoutes());
 
-// register all routes.
-function routeConfigurator($routeProvider, routes) {
+    // Configura las rutas y quien las resuelve.
+    app.config(['$routeProvider', 'routes', routeConfigurator]);
 
-    routes.forEach(function (r) {
-        $routeProvider.when(r.url, r.config);
-    });
+    // Registra cada ruta en el provider, con su correspondiente configuracion.
+    function routeConfigurator($routeProvider, routes) {
 
-    $routeProvider.otherwise({
-        redirectTo: '/'
-    });
-}
+        routes.forEach(function (r) {
+            $routeProvider.when(r.url, r.config);
+        });
 
-// declare all routes.
-function getRoutes() {
-    return [{
-        url: '/',
-        config: {
-            title: 'Principal',
-            templateUrl: 'app/home/home.html',
-            controller: 'homeCtrl'
-        }
+        $routeProvider.otherwise({ redirectTo: '/home' });
     }
-    ];
-}
+
+    //	Define las rutas disponibles de la aplicacion.
+    function getRoutes() {
+        return [
+            {
+                url: '/',
+                config: {
+                    title: 'Inicio',
+                    templateUrl: 'app/home/home.html',
+                    controller: 'homeCtrl'
+                }
+            },
+            {
+                url: '/machines',
+                config: {
+                    title: 'Listar Maquinas',
+                    templateUrl: 'app/machine/list.html',
+                    controller: 'machineListCtrl'
+                }
+            }
+        ];
+    }
+
+})();
