@@ -15,24 +15,21 @@
     <!-- Table -->
     <table ng-table="tableParams" class="table table-condensed table-bordered table-striped" show-filter="false"
         data-ng-show="records.length">
-        <tr ng-repeat="query in $data">
+        <tr ng-repeat="machine in $data">
             <td title="'#'">
                 <b>{{$index + 1}}</b>
             </td>
             <td title="'Nombre'">
-                {{query.name}}
-            </td>
-            <td title="'Descripción'">
-                {{query.description | limitTo: 40}}
+                {{machine.name}}
             </td>
             <td title="'Acciones'">
                 <div class="text-center">
                     <div class="btn-group">
-                        <span class="glyphicon glyphicon-pencil text-info" data-ng-click="edit(query)"
+                        <span class="glyphicon glyphicon-pencil text-info" data-ng-click="edit(machine)"
                             uib-tooltip="Editar"></span>
                     </div>
                     <div class="btn-group">
-                        <span class="glyphicon glyphicon-trash text-danger" data-ng-click="remove(query)"
+                        <span class="glyphicon glyphicon-trash text-danger" data-ng-click="remove(machine)"
                             uib-tooltip="Eliminar"></span>
                     </div>
                 </div>

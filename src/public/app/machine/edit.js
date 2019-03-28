@@ -1,28 +1,25 @@
 
-angular.module('app').controller('machineEditCtrl', ['$scope', '$routeParams', 'machineSrv', 'dialogs', 'toastr', machineEditCtrl]);
+angular.module('app').controller('machineEditCtrl', ['$scope', '$routeParams', 'machineSrv', 'dialogs', 'toastr', 'utils', machineEditCtrl]);
 
-function machineEditCtrl($scope, $routeParams, machineSrv, dialogs, logger) {
+function machineEditCtrl($scope, $routeParams, machineSrv, dialogs, logger, utils) {
 
-    $scope.title = "Nueva Maquina de Turing";
+    $scope.machine = { name: '', nodes: [], edges: [] };
 
     // Busca un automata por su ID y lo renderiza en la pantalla.
     function findById(id) {
-        machineSrv.findById(id).then(function (result) {
-            if (result.error) {
+        machineSrv.findById(id, function (error, result) {
+            if (error) {
                 logger.error('No existe el automata con el id recibido', 'ID no encontrado');
                 return $location.path('/machines');
             }
 
-            $scope.machine = result.response;
+            $scope.machine = result;
             $scope.networkData.nodes.add($scope.machine.nodes);
             $scope.networkData.edges.add($scope.machine.edges);
 
             $scope.title = "Editando: " + $scope.machine.name;
         });
     }
-
-    // bandera que indica si el automata es nuevo.
-    $scope.machine = { _id: false, name: "", nodes: [], edges: [], description: "", currentState: "" };
 
     if ($routeParams.id != "new") {
         findById($routeParams.id);
@@ -32,7 +29,7 @@ function machineEditCtrl($scope, $routeParams, machineSrv, dialogs, logger) {
 
     // Persiste el automata creado/editado.
     $scope.save = function () {
-        if ($scope.name == "")
+        if ($scope.machine.name == "")
             return logger.error('Ingrese un nombre para el automata', 'Error');
 
         if ($scope.machine._id) update(); else save();
@@ -44,16 +41,12 @@ function machineEditCtrl($scope, $routeParams, machineSrv, dialogs, logger) {
             return logger.error('Ingrese un nombre para el automata');
         }
 
-        var nodes = utils.objectToArray($scope.networkData.nodes._data);
-        var edges = utils.objectToArray($scope.networkData.edges._data);
-        var machine = { name: $scope.machine.name, description: $scope.machine.description, nodes: nodes, edges: edges };
-
-        machineSrv.save($scope.machine).then(function (result) {
-            if (result.error)
+        machineSrv.save($scope.machine, function (error, result) {
+            if (error)
                 return logger.error('No se pudo persistir el automata', 'Error');
 
             logger.success('Automata guardado');
-        });
+        })
     }
 
     // envia a actualizar un nuevo automata.
@@ -71,7 +64,6 @@ function machineEditCtrl($scope, $routeParams, machineSrv, dialogs, logger) {
             if (result.error)
                 return logger.error('No se pudo actualizar el automata', 'Error');
 
-            //findById(result.response._id);
             logger.success('Automata actualizado');
         });
     }

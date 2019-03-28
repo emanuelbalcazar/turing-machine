@@ -6,8 +6,6 @@ function machineListCtrl($scope, $location, NgTableParams, dialogs, logger, serv
 
     var initialParams = { page: 1, count: 10 };
 
-    console.log('entro')
-
     var initialSettings = {
         getData: function (params) {
             return new Promise((resolve, reject) => {
@@ -21,6 +19,10 @@ function machineListCtrl($scope, $location, NgTableParams, dialogs, logger, serv
     };
 
     $scope.tableParams = new NgTableParams(initialParams, initialSettings);
+
+    $scope.edit = function (machine) {
+        $location.path('/machines/' + machine._id);
+    };
 
     // remove a extraction query by id.
     $scope.remove = function (machine) {
