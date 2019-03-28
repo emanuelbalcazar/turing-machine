@@ -41,11 +41,16 @@ function machineEditCtrl($scope, $routeParams, machineSrv, dialogs, logger, util
             return logger.error('Ingrese un nombre para el automata');
         }
 
-        machineSrv.save($scope.machine, function (error, result) {
+        var nodes = utils.objectToArray($scope.networkData.nodes._data);
+        var edges = utils.objectToArray($scope.networkData.edges._data);
+        var machine = { name: $scope.machine.name, nodes: nodes, edges: edges };
+
+        machineSrv.save(machine, function (error, result) {
             if (error)
                 return logger.error('No se pudo persistir el automata', 'Error');
 
             logger.success('Automata guardado');
+            $location.path('/machines');
         })
     }
 
@@ -58,10 +63,10 @@ function machineEditCtrl($scope, $routeParams, machineSrv, dialogs, logger, util
 
         var nodes = utils.objectToArray($scope.networkData.nodes._data);
         var edges = utils.objectToArray($scope.networkData.edges._data);
-        var machine = { name: $scope.machine.name, description: $scope.machine.description, nodes: nodes, edges: edges };
+        var machine = { name: $scope.machine.name, nodes: nodes, edges: edges };
 
-        machineSrv.update($scope.machine._id, machine).then(function (result) {
-            if (result.error)
+        machineSrv.update($scope.machine._id, machine, function (error, result) {
+            if (error)
                 return logger.error('No se pudo actualizar el automata', 'Error');
 
             logger.success('Automata actualizado');
